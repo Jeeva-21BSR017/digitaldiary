@@ -1,14 +1,23 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { AuthForm } from "@/components/auth/AuthForm";
+import { DiaryDashboard } from "@/components/diary/DiaryDashboard";
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
+  const [user, setUser] = useState<string | null>(null);
+
+  const handleAuth = (email: string) => {
+    setUser(email);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+  };
+
+  if (!user) {
+    return <AuthForm onAuth={handleAuth} />;
+  }
+
+  return <DiaryDashboard userEmail={user} onLogout={handleLogout} />;
 };
 
 export default Index;
